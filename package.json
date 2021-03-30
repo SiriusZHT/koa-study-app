@@ -1,0 +1,29 @@
+{
+  "name": "koa-study-app",
+  "version": "1.0.0",
+  "description": "study koa",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "nodemon": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiriusZHT/koa-study-app.git"
+  },
+  "keywords": [
+    "koa"
+  ],
+  "author": "siriuszht",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SiriusZHT/koa-study-app/issues"
+  },
+  "homepage": "https://github.com/SiriusZHT/koa-study-app#readme",
+  "dependencies": {
+    "koa": "^2.13.1",
+    "koa-router": "^10.0.0",
+    "mongoose": "^5.12.2",
+    "nodemon": "^2.0.7"
+  }
+}
