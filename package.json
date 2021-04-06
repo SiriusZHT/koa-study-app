@@ -22,10 +22,14 @@
   "homepage": "https://github.com/SiriusZHT/koa-study-app#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-passport": "^4.1.4",
     "koa-router": "^10.0.0",
     "mongoose": "^5.12.2",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.5.2"
   }
 }

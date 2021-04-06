@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs")
 const tools = {
+
     //加密
     // await bcrypt.genSalt(10, (err, salt) => {
     //     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -16,7 +17,16 @@ const tools = {
                 })
             })
         })
+    },
+
+    //判断是否为空
+    isEmpty(value) {
+        return value == undefined || 
+            value === null || 
+            (typeof value === 'object' && Object.keys(value).length === 0) || 
+            (typeof value === 'string' && value.trim().length === 0) 
     }
+
 }
 
 module.exports = tools;

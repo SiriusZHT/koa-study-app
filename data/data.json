@@ -1,0 +1,28 @@
+{
+  "_id": "606b17fa08698c95d5899095",
+  "user": "sirius",
+  "handle": "test",
+  "status": "software engineer",
+  "skills": ["eat", "sleep", "beatBeans"],
+  "experience": [
+    {
+      "current": true,
+      "location": "beijing",
+      "from": "2020-04-06T18:00:00.000Z",
+      "to": "2021-04-06T18:00:00.000Z"
+    },
+    {
+      "current": false,
+      "location": "shanghai",
+      "from": "2019-04-06T18:00:00.000Z",
+      "to": "2020-04-06T18:00:00.000Z"
+    }
+  ],
+  "socialMedia": {
+    "wechat": "sirius",
+    "QQ": "12121221",
+    "github": "https://github.com/meituan"
+  },
+  "date": "2021-04-06T18:00:00.000Z",
+  "__v": 2
+}
