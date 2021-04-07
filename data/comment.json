@@ -1,0 +1,20 @@
+{
+  "_id": "606b17fa08698c95d5899095",
+  "user": "sirius",
+  "likes": [
+    {
+      "_id": "606b17fa08698c95d5899095",
+      "user": "sirius"
+    }
+  ],
+  "comments": [
+    {
+      "date": "2021-04-06T18:00:00.000Z",
+      "_id": "606b17fa08698c95d5899095",
+      "text": "this is a test comment",
+      "user": "sirius"
+    }
+  ],
+  "date": "2021-04-06T18:00:00.000Z",
+  "__v": 2
+}

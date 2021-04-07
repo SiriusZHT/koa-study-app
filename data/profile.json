@@ -6,12 +6,14 @@
   "skills": ["eat", "sleep", "beatBeans"],
   "experience": [
     {
+      "content": "3 years work experience",
       "current": true,
       "location": "beijing",
       "from": "2020-04-06T18:00:00.000Z",
       "to": "2021-04-06T18:00:00.000Z"
     },
     {
+      "content": "8 years work experience",
       "current": false,
       "location": "shanghai",
       "from": "2019-04-06T18:00:00.000Z",

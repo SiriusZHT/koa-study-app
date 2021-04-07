@@ -1,12 +1,13 @@
 const Router = require('koa-router');
 const router = new Router();
 // import profile
-const Profile = require('../../models/Profile')
+const Profile = require('../../models/Profile');
+const User = require('../../models/User');
 const passport = require('passport');
 const mongoose = require('mongoose');
 //引入验证
 const validateProfileInput = require('../../validation/profile');
-
+const validateExperientInput = require('../../validation/experiences');
 /**
  * @route Get api/profile/test
  * @desc test接口地址
@@ -158,13 +159,129 @@ router.get('/all', async ctx => {
 })
 
 /**
- * @route Get api/profile/all
+ * @route Get api/profile/experience
  * @desc get experience profile 
- * @access public
+ * @access private
  */
 /** TODO experience */
+router.post(
+    '/experience',
+    passport.authenticate('jwt', { session: false }),
+    async ctx => {
+        const { errors, isValid } = validateExperientInput(ctx.request.body);
+
+        //判断验证是否通过 如果没有内容
+        if(!isValid) {
+            ctx.status = 400;
+            ctx.body = errors;
+            return;
+        }
+
+        const profileFields = {
+            experience: []
+        };
+        const profile = await Profile.find({ user: ctx.state.user.id });
+        if(profile.length > 0) {
+            // console.log(ctx.request.body)
+            const newExp = {
+                content: ctx.request.body.content,
+                current: ctx.request.body.current, 
+                location: ctx.request.body.location, 
+                from: ctx.request.body.from, 
+                to: ctx.request.body.to, 
+            }
+            profileFields.experience.unshift(newExp);
+            // 只能find one and update，但是不能追加
+            // const profileUpdate = await Profile.findOneAndUpdate(
+            //     { user: ctx.state.user.id },
+            //     { $set: profileFields },
+            //     { new: true }
+            // );
+
+            const profileUpdate = await Profile.update(
+                { user: ctx.state.user.id },
+                { $push: { experience: profileFields.experience } },
+                { $sort: 1 }
+            );
+            // ctx.body = profileUpdate;
+            if(profileUpdate.ok == 1){
+                const profile = await Profile.find({ user: ctx.state.user.id})
+                .populate("user", ["name"]);
+            }
+            if(profile){
+                ctx.status = 200;
+                ctx.body = profile;
+            }
+
+        } else {
+            errors.noprofile = "没有该用户的信息";
+            ctx.status = 404;
+            ctx.body = errors;
+        }
+    } 
+)
+
+/**
+ * @route DELETE api/profile/experience?expId=blabla
+ * @desc delete experience profile 
+ * @access private
+ */
+/** TODO experience */
+router.delete(
+    '/experience',
+    passport.authenticate('jwt', { session: false }),
+    async ctx => {
+        // get expId
+        const expId = ctx.query.expId;
+        // console.log(expId);
+        // find expId
+        const profile = await Profile.find({ user: ctx.state.user.id });
+        if(profile[0].experience.length){
+            const removeIndex = profile[0]
+            .experience.map(item => item.id)
+            .indexOf(expId);
+            //remove
+            profile[0].experience.splice(removeIndex, 1);
+            //update
+            const profileUpdate = await Profile.findOneAndUpdate(
+                { user: ctx.state.user.id },
+                { $set: profile[0] },
+                { new: true }
+            )
+            ctx.body = profileUpdate;    
+        } else {
+            ctx.status = 404;
+            ctx.body = {errors: "没有任何数据"};
+        }
+    } 
+)
 
 
 
+/**
+ * @route DELETE api/profile
+ * @desc delete all user`s experience profile 
+ * @access private
+ */
+/** TODO experience */
+router.delete(
+    '/',
+    passport.authenticate('jwt', { session: false }),
+    async ctx => {
+        const profile = await Profile.deleteOne(
+            { user: ctx.state.user.id }
+        )
+        if(profile.ok == 1) {
+            const user = await User.deleteOne({ _id: ctx.state.user.id });
+            if(user.ok == 1) {
+                ctx.status = 200;
+                ctx.body = { success: true};
+            }
+        } else {
+            ctx.status = 404;
+            ctx.body = { error: "profile不存在" };
+        }
+    } 
+)
 
 module.exports = router.routes();
