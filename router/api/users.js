@@ -84,7 +84,7 @@ router.post("/login", async (ctx) => {
         return;
     }
 
-    //查询
+    //查询 
     const findResult = await User.find({ email: ctx.request.body.email })
     const password = ctx.request.body.password;
     const user = findResult[0];
